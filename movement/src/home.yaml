@@ -1,0 +1,289 @@
+position_space:
+  base: &base
+    position: &keep_position
+      x: 0.03
+      y: 0
+      z: -0.023
+    orientation: &keep_orientation
+      x: 0
+      y: 0
+      z: 0
+      w: 0
+
+  sim: &sim
+    position:
+      x: 0
+      y: 0
+      z: 0.73
+    orientation:
+      x: 0
+      y: 0
+      z: 0
+      w: 0
+
+  eef: &deattach_d0
+    gripper:
+      update: False
+    planning_scene:
+      update: True
+      object: "bio_dispenser_small_bottle_v1.stl"
+      name: "dispenser_0"
+      action: "deattach"
+
+  eef: &attach_d0
+    gripper:
+      update: False
+    planning_scene:
+      update: True
+      object: "bio_dispenser_small_bottle_v1.stl"
+      name: "dispenser_0"
+      action: "attach"
+
+  eef: &deattach_d1
+    gripper:
+      update: False
+    planning_scene:
+      update: True
+      object: "bio_dispenser_small_bottle_v1.stl"
+      name: "dispenser_1"
+      action: "deattach"
+
+  eef: &attach_d1
+    gripper:
+      update: False
+    planning_scene:
+      update: True
+      object: "bio_dispenser_small_bottle_v1.stl"
+      name: "dispenser_1"
+      action: "attach"
+
+  eef: &deattach_d2
+    gripper:
+      update: False
+    planning_scene:
+      update: True
+      object: "bio_dispenser_small_bottle_v1.stl"
+      name: "dispenser_2"
+      action: "deattach"
+
+  eef: &attach_d2
+    gripper:
+      update: False
+    planning_scene:
+      update: True
+      object: "bio_dispenser_small_bottle_v1.stl"
+      name: "dispenser_2"
+      action: "attach"
+
+  eef: &do_nothing
+    gripper:
+      update: False
+    planning_scene:
+      update: False
+
+  eef: &dispense
+    gripper:
+      update: True
+      delays:
+        - 0
+        - 1
+      positions:
+        - 360
+        - 0
+    planning_scene:
+      update: False
+
+  home: &home
+    reference: *base
+    coordinate_system: cartesian
+    eef: *do_nothing
+    position: 
+      x: 0.4964109092753041
+      y: -0.0013538423052906223
+      z: 1.1698448713829102
+    orientation: 
+      x: 0.5084968633877075
+      y: 0.500289999939925
+      z: 0.49441957398168834
+      w: 0.49667911245465113
+    
+  d0_home: &d0_home
+    reference: *base
+    coordinate_system: cartesian
+    eef: *do_nothing
+    position: 
+      x: 0.43822136
+      y: 0.089
+      z: 0.8036750679792021
+    orientation: 
+      x: 0.0006745600176505448
+      y: 0.7134677370703144
+      z: -0.0058675983477976265
+      w: 0.7006631889989489
+
+  d1_home: &d1_home
+    reference: *d0_home
+    coordinate_system: cartesisan
+    eef: *do_nothing
+    position:
+      x: 0
+      y: -0.089
+      z: 0
+    orientation: *keep_orientation
+
+  d2_home: &d2_home
+    reference: *d0_home
+    coordinate_system: cartesisan
+    eef: *do_nothing
+    position:
+      x: 0
+      y: -0.178
+      z: 0
+    orientation: *keep_orientation
+  
+  d0_grab: &d0_grab
+    reference: *d0_home
+    coordinate_system: cartesian
+    eef: *attach_d2
+    position: 
+      x: 0.0375
+      y: 0
+      z: 0
+    orientation: *keep_orientation
+
+  d1_grab: &d1_grab
+    reference: *d0_grab
+    coordinate_system: cartesian
+    eef: *attach_d1
+    position:
+      x: 0
+      y: -0.089
+      z: 0
+    orientation: *keep_orientation
+
+  d2_grab: &d2_grab
+    reference: *d1_grab
+    coordinate_system: cartesian
+    eef: *attach_d0
+    position:
+      x: 0
+      y: -0.089
+      z: 0
+    orientation: *keep_orientation
+
+  d0_place: &d0_place
+    reference: *d0_grab
+    coordinate_system: cartesian
+    eef: *deattach_d2
+    position:
+      x: -0.005
+      y: 0
+      z: 0.01
+    orientation: *keep_orientation
+
+  d1_place: &d1_place
+    reference: *d1_grab
+    coordinate_system: cartesian
+    eef: *deattach_d1
+    position:
+      x: -0.002
+      y: 0.003
+      z: 0.01
+    orientation: *keep_orientation
+
+  d2_place: &d2_place
+    reference: *d2_grab
+    coordinate_system: cartesian
+    eef: *deattach_d0
+    position:
+      x: -0.005
+      y: 0
+      z: 0.01
+    orientation: *keep_orientation
+
+  d0_lift: &d0_lift
+    reference: *d0_grab
+    coordinate_system: cartesian
+    eef: *do_nothing
+    position: 
+      x: 0
+      y: 0
+      z: 0.3
+    orientation: *keep_orientation
+
+  d1_lift: &d1_lift
+    reference: *d1_grab
+    coordinate_system: cartesian
+    eef: *do_nothing
+    position: 
+      x: 0
+      y: 0
+      z: 0.3
+    orientation: *keep_orientation
+
+  d2_lift: &d2_lift
+    reference: *d2_grab
+    coordinate_system: cartesian
+    eef: *do_nothing
+    position: 
+      x: 0
+      y: 0
+      z: 0.3
+    orientation: *keep_orientation
+
+  target_1: &target_1
+    reference: *base
+    coordinate_system: cartesian
+    eef: *dispense
+    position: 
+      x: 0.2596238372665062
+      y: 0.5877850010083194
+      z: 1.0238443039530603
+    orientation: 
+      x: -0.5055357895603413
+      y: 0.4986347640062258
+      z: 0.5102174540797526
+      w: 0.48525775331305615
+  
+  target_2: &target_2
+    reference: *d2_lift
+    coordinate_system: joints
+    eef: *do_nothing
+    position:
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 1.57
+      
+sequence: 
+  # - move:
+  #   - *target_2
+  
+  - move:
+    - *home
+    # - *d0_home
+    # - *d0_grab
+    # - *d0_lift
+    # - *target_1
+    # - *d0_lift
+    # - *d0_place
+    # - *d0_home
+    
+    # - *d1_home
+    # - *d1_grab
+    # - *d1_lift
+    # - *target_1
+    # - *d1_lift
+    # - *d1_place
+    # - *d1_home
+
+    # - *d2_home
+    # - *d2_grab
+    # - *d2_lift
+    # - *target_1
+    # - *d2_lift
+    # - *d2_place
+    # - *d2_home
+    # - *home
