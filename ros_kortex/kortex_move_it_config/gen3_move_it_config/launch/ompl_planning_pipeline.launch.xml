@@ -2,7 +2,7 @@
 
   <!-- OMPL Plugin for MoveIt! -->
   <arg name="planning_plugin" value="ompl_interface/OMPLPlanner" />
-  <arg name="prefix" default=""/>
+  <arg name="prefix" default="" />
 
   <!-- The request adapters (plugins) used when planning with OMPL.
        ORDER MATTERS -->
@@ -18,6 +18,6 @@
   <param name="request_adapters" value="$(arg planning_adapters)" />
   <param name="start_state_max_bounds_error" value="$(arg start_state_max_bounds_error)" />
 
-  <rosparam command="load" file="$(find gen3_move_it_config)/config/ompl_planning.yaml" subst_value="true"/>
+  <rosparam command="load" file="$(find gen3_move_it_config)/config/ompl_planning.yaml" subst_value="true" />
 
 </launch>

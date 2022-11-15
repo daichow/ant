@@ -7,7 +7,7 @@ import moveit_commander
 import moveit_msgs.msg
 import geometry_msgs.msg
 import time
-
+import actionlib
 from math import pi, tau, dist, fabs, cos
 
 
@@ -69,6 +69,11 @@ class MissionActionServer(object):
 
             rospy.loginfo("Initializing node in namespace " +
                           rospy.get_namespace())
+
+            # self.action_server = actionlib.SimpleActionServer(
+            #     "waypoint_action_server", MissionMsgAction, execute_cb=self.goal_callback, auto_start=False)
+            # self.action_server.start()
+
         except Exception as e:
             print(e)
         else:
@@ -192,13 +197,13 @@ class MissionActionServer(object):
         waypoints = []
 
         mtarget = moveit_commander.Pose()
-        mtarget.position.x = 0.43822136
-        mtarget.position.y = 0.089
-        mtarget.position.z = 0.8036750679792021
-        mtarget.orientation.x = 0.0006745600176505448
-        mtarget.orientation.y = 0.7134677370703144
-        mtarget.orientation.z = -0.0058675983477976265
-        mtarget.orientation.w = 0.7006631889989489
+        mtarget.position.x = 0.4964109092753041
+        mtarget.position.y = -0.0013538423052906223
+        mtarget.position.z = 1.1698448713829102
+        mtarget.orientation.x = 1.1698448713829102
+        mtarget.orientation.y = 0.500289999939925
+        mtarget.orientation.z = 0.49441957398168834
+        mtarget.orientation.w = 0.49667911245465113
 
         waypoints.append(mtarget)
 
@@ -234,8 +239,9 @@ class MissionActionServer(object):
             self.move_group.set_goal_tolerance(0.005)  # 1/2 cm
             print(
                 f"current planner id: {self.move_group.get_planning_pipeline_id()}")
-            # self.move_group.set_planning_pipeline_id('ompl')
-            # self.move_group.set_planner_id("SPARS")
+            self.move_group.set_planning_pipeline_id(
+                'pilz_industrial_motion_planner')
+            self.move_group.set_planner_id("PTP")
             self.move_group.set_planning_time(1.0)
             self.move_group.set_num_planning_attempts(10)
             self.move_group.set_max_velocity_scaling_factor(1.0)

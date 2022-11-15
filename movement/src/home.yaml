@@ -257,33 +257,30 @@ position_space:
       - 0
       - 1.57
       
-sequence: 
-  # - move:
-  #   - *target_2
-  
-  - move:
-    - *home
-    # - *d0_home
-    # - *d0_grab
-    # - *d0_lift
-    # - *target_1
-    # - *d0_lift
-    # - *d0_place
-    # - *d0_home
-    
-    # - *d1_home
-    # - *d1_grab
-    # - *d1_lift
-    # - *target_1
-    # - *d1_lift
-    # - *d1_place
-    # - *d1_home
+sequence:
 
-    # - *d2_home
-    # - *d2_grab
-    # - *d2_lift
-    # - *target_1
-    # - *d2_lift
-    # - *d2_place
-    # - *d2_home
-    # - *home
+  - *home
+  # - *d0_home
+  # - *d0_grab
+  # - *d0_lift
+  # - *target_1
+  # - *d0_lift
+  # - *d0_place
+  # - *d0_home
+  
+  # - *d1_home
+  # - *d1_grab
+  # - *d1_lift
+  # - *target_1
+  # - *d1_lift
+  # - *d1_place
+  # - *d1_home
+
+  # - *d2_home
+  # - *d2_grab
+  # - *d2_lift
+  # - *target_1
+  # - *d2_lift
+  # - *d2_place
+  # - *d2_home
+  # - *home

@@ -1,38 +1,39 @@
 <launch>
 
   <!-- The number of degrees of freedom of the Gen3 arm -->
-  <arg name="dof" default="7"/>
-  <arg name="use_hard_limits" default="false"/>
-  
+  <arg name="dof" default="7" />
+  <arg name="use_hard_limits" default="false" />
+  <arg name="pipeline" default="ompl" />
+
   <!-- The joint and link names prefix used in kortex_description -->
-  <arg name="prefix" default=""/>
+  <arg name="prefix" default="" />
 
   <include file="$(find gen3_move_it_config)/launch/planning_context.launch">
-    <arg name="dof" value="$(arg dof)"/>
-    <arg name="use_hard_limits" value="$(arg use_hard_limits)"/>
-    <arg name="prefix" value="$(arg prefix)"/>
+    <arg name="dof" value="$(arg dof)" />
+    <arg name="use_hard_limits" value="$(arg use_hard_limits)" />
+    <arg name="prefix" value="$(arg prefix)" />
   </include>
 
   <!-- GDB Debug Option -->
   <arg name="debug" default="false" />
   <arg unless="$(arg debug)" name="launch_prefix" value="" />
-  <arg     if="$(arg debug)" name="launch_prefix"
-	   value="gdb -x $(find gen3_move_it_config)/launch/gdb_settings.gdb --ex run --args" />
+  <arg if="$(arg debug)" name="launch_prefix"
+    value="gdb -x $(find gen3_move_it_config)/launch/gdb_settings.gdb --ex run --args" />
 
   <!-- Verbose Mode Option -->
   <arg name="info" default="$(arg debug)" />
   <arg unless="$(arg info)" name="command_args" value="" />
-  <arg     if="$(arg info)" name="command_args" value="--debug" />
+  <arg if="$(arg info)" name="command_args" value="--debug" />
 
   <!-- move_group settings -->
-  <arg name="allow_trajectory_execution" default="true"/>
-  <arg name="fake_execution" default="false"/>
-  <arg name="max_safe_path_cost" default="1"/>
+  <arg name="allow_trajectory_execution" default="true" />
+  <arg name="fake_execution" default="false" />
+  <arg name="max_safe_path_cost" default="1" />
   <arg name="jiggle_fraction" default="0.05" />
-  <arg name="publish_monitored_planning_scene" default="true"/>
+  <arg name="publish_monitored_planning_scene" default="true" />
 
-  <arg name="capabilities" default=""/>
-  <arg name="disable_capabilities" default=""/>
+  <arg name="capabilities" default="" />
+  <arg name="disable_capabilities" default="" />
   <!-- load these non-default MoveGroup capabilities (space seperated) -->
   <!--
   <arg name="capabilities" value="
@@ -51,17 +52,17 @@
 
   <!-- Planning Functionality -->
   <include ns="move_group" file="$(find gen3_move_it_config)/launch/planning_pipeline.launch.xml">
-    <arg name="pipeline" value="ompl" />
-    <arg name="prefix" value="$(arg prefix)"/>
+    <arg name="pipeline" value="$(arg pipeline)" />
+    <arg name="prefix" value="$(arg prefix)" />
   </include>
 
   <!-- Trajectory Execution Functionality -->
   <include ns="move_group" file="$(find gen3_move_it_config)/launch/trajectory_execution.launch.xml" if="$(arg allow_trajectory_execution)">
-    <arg name="dof" value="$(arg dof)"/>
+    <arg name="dof" value="$(arg dof)" />
     <arg name="moveit_manage_controllers" value="true" />
-    <arg name="moveit_controller_manager" value="gen3" unless="$(arg fake_execution)"/>
-    <arg name="moveit_controller_manager" value="fake" if="$(arg fake_execution)"/>
-    <arg name="prefix" value="$(arg prefix)"/>
+    <arg name="moveit_controller_manager" value="gen3" unless="$(arg fake_execution)" />
+    <arg name="moveit_controller_manager" value="fake" if="$(arg fake_execution)" />
+    <arg name="prefix" value="$(arg prefix)" />
   </include>
 
   <!-- Sensors Functionality -->
@@ -74,11 +75,11 @@
     <!-- Set the display variable, in case OpenGL code is used internally -->
     <env name="DISPLAY" value="$(optenv DISPLAY :0)" />
 
-    <param name="allow_trajectory_execution" value="$(arg allow_trajectory_execution)"/>
-    <param name="max_safe_path_cost" value="$(arg max_safe_path_cost)"/>
+    <param name="allow_trajectory_execution" value="$(arg allow_trajectory_execution)" />
+    <param name="max_safe_path_cost" value="$(arg max_safe_path_cost)" />
     <param name="jiggle_fraction" value="$(arg jiggle_fraction)" />
-    <param name="capabilities" value="$(arg capabilities)"/>
-    <param name="disable_capabilities" value="$(arg disable_capabilities)"/>
+    <param name="capabilities" value="$(arg capabilities)" />
+    <param name="disable_capabilities" value="$(arg disable_capabilities)" />
 
 
     <!-- Publish the planning scene of the physical robot so that rviz plugin can know actual robot -->
